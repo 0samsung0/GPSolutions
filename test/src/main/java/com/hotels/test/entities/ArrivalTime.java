@@ -1,34 +1,26 @@
 package com.hotels.test.entities;
 
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ArrivalTime {
+    @Id
     private Long id;
+    @Column
     private String checkIn;
+    @Column
     private String checkOut;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
-    @Id
-    public Long getId() {
-        return id;
-    }
-
-    public String getCheckIn() {
-        return checkIn;
-    }
-    public void setCheckIn(String checkIn) {
-        this.checkIn = checkIn;
-    }
-    public String getCheckOut() {
-        return checkOut;
-    }
-    public void setCheckOut(String checkOut) {
-        this.checkOut = checkOut;
-    }
 }

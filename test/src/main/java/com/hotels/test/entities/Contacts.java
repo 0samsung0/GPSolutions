@@ -1,34 +1,27 @@
 package com.hotels.test.entities;
 
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Contacts {
-    private Long id;
-    private String phone;
-    private String email;
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     @Id
-    public Long getId() {
-        return id;
-    }
+    private Long id;
+    @Column
+    private String phone;
+    @Column
+    private String email;
 
-    public String getPhone() {
-        return phone;
-    }
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-    public String getEmail() {
-        return email;
-    }
-    public void setEmail(String email) {
-        this.email = email;
-    }
+
 }

@@ -5,26 +5,21 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import java.util.List;
 import jakarta.persistence.ElementCollection;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Amenities {
+
+    @Id
     private Long id;
     @ElementCollection
     private List<String> amenities;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Id
-    public Long getId() {
-        return id;
-    }
-
-    public List<String> getAmenities() {
-        return amenities;
-    }
-    public void setAmenities(List<String> amenities) {
-        this.amenities = amenities;
-    }
 }

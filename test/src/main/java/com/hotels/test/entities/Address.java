@@ -1,55 +1,33 @@
 package com.hotels.test.entities;
 
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Address {
+    @Id
     private Long id;
+    @Column
     private String houseNumber;
+    @Column
     private String street;
+    @Column
     private String city;
+    @Column
     private String country;
+
+    @Column
     private String postCode;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
-    @Id
-    public Long getId() {
-        return id;
-    }
-
-    public String getHouseNumber() {
-        return houseNumber;
-    }
-    public void setHouseNumber(String houseNumber) {
-        this.houseNumber = houseNumber;
-    }
-    public String getStreet() {
-        return street;
-    }
-    public void setStreet(String street) {
-        this.street = street;
-    }
-    public String getCity() {
-        return city;
-    }
-    public void setCity(String city) {
-        this.city = city;
-    }
-    public String getCountry() {
-        return country;
-    }
-    public void setCountry(String country) {
-        this.country = country;
-    }
-    public String getPostCode() {
-        return postCode;
-    }
-    public void setPostCode(String postCode) {
-        this.postCode = postCode;
-    }
 }

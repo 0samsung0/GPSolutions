@@ -1,19 +1,42 @@
 package com.hotels.test.entities;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Hotel {
-    private Long id;
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     @Id
-    public Long getId() {
-        return id;
-    }
+    private Long id;
+
+    @OneToOne
+    @JoinColumn(name = "contacts")
+    private Contacts contacts;
+
+    @OneToOne
+    @JoinColumn
+    private ArrivalTime arrivalTime;
+
+    @OneToOne
+    @JoinColumn
+    private Amenities amenities;
+
+    @OneToOne
+    @JoinColumn
+    private Address address;
+
+    @Column
+    private String description;
+
+    @Column
+    private String brand;
+
 }
