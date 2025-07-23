@@ -19,7 +19,13 @@ public class Amenities {
 
     @Id
     private Long id;
+
+
     @ElementCollection
     private List<String> amenities;
 
+
+    public List<String> getAmenities(){
+        return (List<String>) amenities.stream().sorted();
+    }
 }

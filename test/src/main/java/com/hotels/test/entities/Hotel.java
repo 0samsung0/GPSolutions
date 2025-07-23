@@ -7,6 +7,8 @@ import lombok.Setter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -38,5 +40,15 @@ public class Hotel {
 
     @Column
     private String brand;
+
+    @Column
+    private String name;
+
+
+
+    public List<String> getAminities(){
+        return amenities.getAmenities();
+    }
+
 
 }
