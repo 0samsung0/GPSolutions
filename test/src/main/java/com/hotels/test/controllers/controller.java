@@ -2,13 +2,16 @@ package com.hotels.test.controllers;
 
 
 import com.hotels.test.DTO.HotelCreateDTO;
+import com.hotels.test.DTO.HotelCreateRequest;
 import com.hotels.test.DTO.HotelSummaryDTO;
+import com.hotels.test.DTO.HotelSummaryResponse;
 import com.hotels.test.entities.Hotel;
 import com.hotels.test.services.HotelService;
 import com.hotels.test.services.AmenetiesService;
 import com.hotels.test.services.AddressService;
 import com.hotels.test.services.ArrivalTimeService;
 import com.hotels.test.services.ContactsService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -71,30 +74,26 @@ public class controller {
     }
 
 
-    @GetMapping(value = "/histogram/{param}")
-    public ResponseEntity<Map<String, Integer>> histogram(
-            @PathVariable("param") String param
-    ){
-
+    @GetMapping("/histogram/{param}")
+    public ResponseEntity<Map<String, Integer>> getHistogram(@PathVariable String param) {
+        Map<String, Integer> histogram = hotelService.histogramByParam(param);
+        return ResponseEntity.ok(histogram);
     }
 
 
-    @PostMapping(value = "/hotels")
-    public ResponseEntity createHotel(
-            @RequestBody HotelCreateDTO hotelCreateDTOs
-            ){
-        HotelSummaryDTO hotelSummaryDTO = hotelService.createHotel(hotelCreateDTOs);
-        return ResponseEntity.status(HttpStatus.CREATED).body(hotelSummaryDTO);
-
+    @PostMapping("/hotels")
+    public ResponseEntity<HotelSummaryDTO> createHotel(
+            @Valid @RequestBody HotelCreateRequest request
+    ) {
+        HotelSummaryDTO createdHotel = hotelService.createHotel(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdHotel);
     }
 
 
-    @PostMapping(value = "/{id}/amenities")
-    public ResponseEntity<Void> addAmenities(
-            @PathVariable int id,
-            @RequestBody List<String> amenities
-    ){
-
+    @PostMapping("/hotels/{id}/amenities")
+    public ResponseEntity<Void> addAmenitiesToHotel(@PathVariable int id, @RequestBody List<String> amenities) {
+        hotelService.addAmenitiesToHotel(id, amenities);
+        return ResponseEntity.ok().build();
     }
 
 

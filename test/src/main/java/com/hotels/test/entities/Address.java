@@ -17,8 +17,11 @@ import lombok.Setter;
 public class Address {
     @Id
     private Long id;
+
+
+
     @Column
-    private String houseNumber;
+    private Integer houseNumber;
     @Column
     private String street;
     @Column

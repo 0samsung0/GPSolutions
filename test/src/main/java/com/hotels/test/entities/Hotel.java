@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -50,5 +51,9 @@ public class Hotel {
         return amenities.getAmenities();
     }
 
+    @Autowired
+    public void createAmenities(Amenities amenities){
+        this.amenities = amenities;
+    }
 
 }
