@@ -34,7 +34,6 @@ public class HotelService {
     }
 
     public List<HotelSummaryDTO> searchByArgument(String name, String brand, String city, String country, List<String> amenities) {
-
         List<Hotel> hotels = hotelRepo.findAll();
         List<Hotel> completeHotels = hotels.stream()
                 .filter(hotel -> name == null || hotel.getName().equalsIgnoreCase(name))
@@ -42,8 +41,6 @@ public class HotelService {
                 .filter(hotel -> city == null || (hotel.getAddress() != null && hotel.getAddress().getCity().equalsIgnoreCase(city)))
                 .filter(hotel -> country == null || (hotel.getAddress() != null && hotel.getAddress().getCountry().equalsIgnoreCase(country)))
                 .toList();
-
-
         if (amenities != null && !amenities.isEmpty()) {
             amenities = amenities.stream().sorted().toList();
             List<Hotel> filtered = new ArrayList<>();
@@ -122,20 +119,14 @@ public class HotelService {
                 hotelAmenities.add(amenity);
             }
         }
-        System.out.println("\n\n\n\n\n==========" + amenities.toString() +
-                "\n\n\n\n\n++++++++" + hotel.toString() + "\n\n\n\n\n");
         hotelRepo.save(hotel);
     }
 
     public HotelSummaryDTO createHotel(HotelCreateRequest request){
-
-
         Hotel hotel = new Hotel();
-
         hotel.setName(request.name());
         hotel.setDescription(request.description());
         hotel.setBrand(request.brand());
-
         Address address = new Address();
         address.setHouseNumber(request.address().houseNumber());
         address.setStreet(request.address().street());
@@ -143,46 +134,30 @@ public class HotelService {
         address.setCountry(request.address().country());
         address.setPostCode(request.address().postCode());
         hotel.setAddress(address);
-
-        // Преобразование контактов
         Contacts contact = new Contacts();
         contact.setPhone(request.contacts().phone());
         contact.setEmail(request.contacts().email());
         hotel.setContacts(contact);
-
-        // Преобразование времени прибытия
         ArrivalTime arrivalTime = new ArrivalTime();
         arrivalTime.setCheckIn(request.arrivalTime().checkIn());
-        arrivalTime.setCheckOut(request.arrivalTime().checkOut()); // Может быть null
+        arrivalTime.setCheckOut(request.arrivalTime().checkOut());
         hotel.setArrivalTime(arrivalTime);
-
         hotelRepo.save(hotel);
-
-
         return getDTo(hotel);
-
     }
 
-
-
-
     public HotelSummaryDTO getDTo(Hotel hotel){
-
-            HotelSummaryDTO hotelSummaryDTO = new HotelSummaryDTO(
-                    hotel.getId(),
-                    hotel.getName(),
-                    hotel.getDescription(),
-                    hotel.getAddress().toString(),
-                    hotel.getContacts().getPhone()
-            );
-
+        HotelSummaryDTO hotelSummaryDTO = new HotelSummaryDTO(
+                hotel.getId(),
+                hotel.getName(),
+                hotel.getDescription(),
+                hotel.getAddress().toString(),
+                hotel.getContacts().getPhone()
+        );
         return hotelSummaryDTO;
-
     }
 
     public List<HotelSummaryDTO> getDTO(List<Hotel> hotelList){
-
-        if(hotelList.isEmpty()) System.out.println("\n\n\n\n\nFREEEEEEEEEEEEEEEEEE\n\n\n\n\n");
         List<HotelSummaryDTO> hotelSummaryDTOList = new ArrayList<>();
         for(Hotel hotel : hotelList){
             HotelSummaryDTO hotelSummaryDTO = new HotelSummaryDTO(
@@ -195,7 +170,6 @@ public class HotelService {
             hotelSummaryDTOList.add(hotelSummaryDTO);
         }
         return hotelSummaryDTOList;
-
     }
 
 } 
