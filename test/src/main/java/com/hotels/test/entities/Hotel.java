@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -27,9 +28,10 @@ public class Hotel {
     @JoinColumn
     private ArrivalTime arrivalTime;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn
-    private Amenities amenities;
+    @ElementCollection(fetch = FetchType.LAZY) // Eager по умолчанию может быть проблематичен
+    @CollectionTable(name = "hotel_amenities", joinColumns = @JoinColumn(name = "hotel_id"))
+    @Column(name = "amenity") // Имя колонки для каждого элемента в списке
+    private List<String> amenities = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn
@@ -44,14 +46,14 @@ public class Hotel {
 
 
 
-    public List<String> getAminities(){
+    public List<String> getAmenities(){
         if (amenities == null) return new java.util.ArrayList<>();
-        return amenities.getAmenities();
+        return amenities;
     }
 
-    @Autowired
-    public void createAmenities(Amenities amenities){
-        this.amenities = amenities;
-    }
+//    @Autowired
+//    public void createAmenities(Amenities amenities){
+//        this.amenities = amenities;
+//    }
 
 }

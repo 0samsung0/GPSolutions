@@ -34,6 +34,7 @@ public class HotelService {
     }
 
     public List<HotelSummaryDTO> searchByArgument(String name, String brand, String city, String country, List<String> amenities) {
+
         List<Hotel> hotels = hotelRepo.findAll();
         List<Hotel> completeHotels = hotels.stream()
                 .filter(hotel -> name == null || hotel.getName().equalsIgnoreCase(name))
@@ -44,9 +45,10 @@ public class HotelService {
 
 
         if (amenities != null && !amenities.isEmpty()) {
+            amenities = amenities.stream().sorted().toList();
             List<Hotel> filtered = new ArrayList<>();
             for (Hotel hotel : completeHotels) {
-                List<String> hotelAmenities = hotel.getAminities();
+                List<String> hotelAmenities = hotel.getAmenities();
                 if (hotelAmenities.containsAll(amenities)) {
                     filtered.add(hotel);
                 }
@@ -90,8 +92,8 @@ public class HotelService {
                 break;
             case "amenities":
                 for (Hotel hotel : hotels) {
-                    if (hotel.getAminities() != null) {
-                        for (String amenity : hotel.getAminities()) {
+                    if (hotel.getAmenities() != null) {
+                        for (String amenity : hotel.getAmenities()) {
                             if (amenity != null) {
                                 histogram.put(amenity, histogram.getOrDefault(amenity, 0) + 1);
                             }
@@ -112,9 +114,9 @@ public class HotelService {
         }
         Hotel hotel = hotelOpt.get();
         if (hotel.getAmenities() == null) {
-            hotel.setAmenities(new Amenities());
+            hotel.setAmenities(new ArrayList<>());
         }
-        List<String> hotelAmenities = hotel.getAmenities().getAmenities();
+        List<String> hotelAmenities = hotel.getAmenities();
         for (String amenity : amenities) {
             if (!hotelAmenities.contains(amenity)) {
                 hotelAmenities.add(amenity);
