@@ -1,31 +1,32 @@
 package com.hotels.test.entities;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
-import jakarta.persistence.ElementCollection;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class Amenities {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
 
     @ElementCollection
-    private List<String> amenities;
+    private List<String> amenities = new ArrayList<>();
 
 
     public List<String> getAmenities(){
-        return (List<String>) amenities.stream().sorted();
+        if (amenities == null) amenities = new ArrayList<>();
+        return new ArrayList<>(amenities.stream().sorted().toList());
     }
 }

@@ -1,13 +1,8 @@
 package com.hotels.test.entities;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
 @Getter
@@ -16,6 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Address {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
 
@@ -33,4 +29,13 @@ public class Address {
     private String postCode;
 
 
+
+    public String toString(){
+
+        return houseNumber + " "
+                +street+", "
+                +city + ", "
+                +postCode+", "
+                +country;
+    }
 }

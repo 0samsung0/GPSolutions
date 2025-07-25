@@ -4,6 +4,7 @@ import com.hotels.test.DTO.*;
 import com.hotels.test.DTO.HotelSummaryDTO;
 import com.hotels.test.entities.*;
 import com.hotels.test.repositories.HotelRepo;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 @Service
+@Transactional
 public class HotelService {
     HotelRepo hotelRepo;
 
@@ -41,21 +43,17 @@ public class HotelService {
                 .toList();
 
 
-        if(amenities.isEmpty()){
-            return getDTO(completeHotels);
-        }
-
-        for(Hotel hotel : completeHotels) {
-            if(hotel.getAminities().containsAll(amenities)){
-
+        if (amenities != null && !amenities.isEmpty()) {
+            List<Hotel> filtered = new ArrayList<>();
+            for (Hotel hotel : completeHotels) {
+                List<String> hotelAmenities = hotel.getAminities();
+                if (hotelAmenities.containsAll(amenities)) {
+                    filtered.add(hotel);
+                }
             }
+            completeHotels = filtered;
         }
-
-
-        return getDTO(completeHotels
-                .stream()
-                .filter(hotel -> hotel.getAminities().containsAll(amenities))
-                .toList());
+        return getDTO(completeHotels);
     }
 
     public Map<String, Integer> histogramByParam(String param) {
@@ -113,18 +111,22 @@ public class HotelService {
             throw new IllegalArgumentException("Hotel not found");
         }
         Hotel hotel = hotelOpt.get();
-        if (hotel.getAminities() == null) {
-            hotel.createAmenities(new Amenities());
+        if (hotel.getAmenities() == null) {
+            hotel.setAmenities(new Amenities());
         }
+        List<String> hotelAmenities = hotel.getAmenities().getAmenities();
         for (String amenity : amenities) {
-            if (!hotel.getAminities().contains(amenity)) {
-                hotel.getAminities().add(amenity);
+            if (!hotelAmenities.contains(amenity)) {
+                hotelAmenities.add(amenity);
             }
         }
+        System.out.println("\n\n\n\n\n==========" + amenities.toString() +
+                "\n\n\n\n\n++++++++" + hotel.toString() + "\n\n\n\n\n");
         hotelRepo.save(hotel);
     }
 
     public HotelSummaryDTO createHotel(HotelCreateRequest request){
+
 
         Hotel hotel = new Hotel();
 
@@ -152,8 +154,8 @@ public class HotelService {
         arrivalTime.setCheckOut(request.arrivalTime().checkOut()); // Может быть null
         hotel.setArrivalTime(arrivalTime);
 
-
         hotelRepo.save(hotel);
+
 
         return getDTo(hotel);
 
@@ -178,6 +180,7 @@ public class HotelService {
 
     public List<HotelSummaryDTO> getDTO(List<Hotel> hotelList){
 
+        if(hotelList.isEmpty()) System.out.println("\n\n\n\n\nFREEEEEEEEEEEEEEEEEE\n\n\n\n\n");
         List<HotelSummaryDTO> hotelSummaryDTOList = new ArrayList<>();
         for(Hotel hotel : hotelList){
             HotelSummaryDTO hotelSummaryDTO = new HotelSummaryDTO(

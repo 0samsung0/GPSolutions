@@ -1,0 +1,95 @@
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<databaseChangeLog-->
+<!--        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"-->
+<!--        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
+<!--        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-->
+<!--        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">-->
+
+<!--    <changeSet id="1-create-address" author="ai">-->
+<!--        <createTable tableName="address">-->
+<!--            <column name="id" type="BIGINT">-->
+<!--                <constraints primaryKey="true" nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="house_number" type="INT"/>-->
+<!--            <column name="street" type="VARCHAR(255)"/>-->
+<!--            <column name="city" type="VARCHAR(255)"/>-->
+<!--            <column name="country" type="VARCHAR(255)"/>-->
+<!--            <column name="post_code" type="VARCHAR(255)"/>-->
+<!--        </createTable>-->
+<!--    </changeSet>-->
+
+<!--    <changeSet id="2-create-contacts" author="ai">-->
+<!--        <createTable tableName="contacts">-->
+<!--            <column name="id" type="BIGINT">-->
+<!--                <constraints primaryKey="true" nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="phone" type="VARCHAR(255)"/>-->
+<!--            <column name="email" type="VARCHAR(255)"/>-->
+<!--        </createTable>-->
+<!--    </changeSet>-->
+
+<!--    <changeSet id="3-create-arrival_time" author="ai">-->
+<!--        <createTable tableName="arrival_time">-->
+<!--            <column name="id" type="BIGINT">-->
+<!--                <constraints primaryKey="true" nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="check_in" type="VARCHAR(255)"/>-->
+<!--            <column name="check_out" type="VARCHAR(255)"/>-->
+<!--        </createTable>-->
+<!--    </changeSet>-->
+
+<!--    <changeSet id="4-create-amenities" author="ai">-->
+<!--        <createTable tableName="amenities">-->
+<!--            <column name="id" type="BIGINT">-->
+<!--                <constraints primaryKey="true" nullable="false"/>-->
+<!--            </column>-->
+<!--        </createTable>-->
+<!--        <createTable tableName="amenities_amenities">-->
+<!--            <column name="amenities_id" type="BIGINT">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="amenities" type="VARCHAR(255)"/>-->
+<!--        </createTable>-->
+<!--        <addForeignKeyConstraint baseTableName="amenities_amenities"-->
+<!--                                baseColumnNames="amenities_id"-->
+<!--                                referencedTableName="amenities"-->
+<!--                                referencedColumnNames="id"-->
+<!--                                constraintName="fk_amenities_amenities_amenities_id"/>-->
+<!--    </changeSet>-->
+
+<!--    <changeSet id="5-create-hotel" author="ai">-->
+<!--        <createTable tableName="hotel">-->
+<!--            <column name="id" type="BIGINT">-->
+<!--                <constraints primaryKey="true" nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="contacts" type="BIGINT"/>-->
+<!--            <column name="arrival_time_id" type="BIGINT"/>-->
+<!--            <column name="amenities_id" type="BIGINT"/>-->
+<!--            <column name="address_id" type="BIGINT"/>-->
+<!--            <column name="description" type="VARCHAR(255)"/>-->
+<!--            <column name="brand" type="VARCHAR(255)"/>-->
+<!--            <column name="name" type="VARCHAR(255)"/>-->
+<!--        </createTable>-->
+<!--        <addForeignKeyConstraint baseTableName="hotel"-->
+<!--                                baseColumnNames="contacts"-->
+<!--                                referencedTableName="contacts"-->
+<!--                                referencedColumnNames="id"-->
+<!--                                constraintName="fk_hotel_contacts"/>-->
+<!--        <addForeignKeyConstraint baseTableName="hotel"-->
+<!--                                baseColumnNames="arrival_time_id"-->
+<!--                                referencedTableName="arrival_time"-->
+<!--                                referencedColumnNames="id"-->
+<!--                                constraintName="fk_hotel_arrival_time"/>-->
+<!--        <addForeignKeyConstraint baseTableName="hotel"-->
+<!--                                baseColumnNames="amenities_id"-->
+<!--                                referencedTableName="amenities"-->
+<!--                                referencedColumnNames="id"-->
+<!--                                constraintName="fk_hotel_amenities"/>-->
+<!--        <addForeignKeyConstraint baseTableName="hotel"-->
+<!--                                baseColumnNames="address_id"-->
+<!--                                referencedTableName="address"-->
+<!--                                referencedColumnNames="id"-->
+<!--                                constraintName="fk_hotel_address"/>-->
+<!--    </changeSet>-->
+
+<!--</databaseChangeLog>-->

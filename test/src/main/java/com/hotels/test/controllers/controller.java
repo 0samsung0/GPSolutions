@@ -1,7 +1,7 @@
 package com.hotels.test.controllers;
 
 
-import com.hotels.test.DTO.HotelCreateDTO;
+
 import com.hotels.test.DTO.HotelCreateRequest;
 import com.hotels.test.DTO.HotelSummaryDTO;
 import com.hotels.test.DTO.HotelSummaryResponse;
@@ -12,6 +12,10 @@ import com.hotels.test.services.AddressService;
 import com.hotels.test.services.ArrivalTimeService;
 import com.hotels.test.services.ContactsService;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -22,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/property-view")
@@ -52,7 +57,7 @@ public class controller {
     }
 
 
-    @GetMapping(value = "/{id}")/////////////////////////
+    @GetMapping(value = "/hotels/{id}")/////////////////////////
     public ResponseEntity<Hotel> getInfo(
             @PathVariable("id") int id
     ){
@@ -69,7 +74,7 @@ public class controller {
             @RequestParam(required = false) String country,
             @RequestParam(required = false) List<String> amenities
     ){
-        List<HotelSummaryDTO> hotels = hotelService.searchByArgument(name, brand, city, country, (List<String>) amenities.stream().sorted());
+        List<HotelSummaryDTO> hotels = hotelService.searchByArgument(name, brand, city, country, amenities.stream().sorted().toList());
         return ResponseEntity.ok(hotels);
     }
 
@@ -94,6 +99,11 @@ public class controller {
     public ResponseEntity<Void> addAmenitiesToHotel(@PathVariable int id, @RequestBody List<String> amenities) {
         hotelService.addAmenitiesToHotel(id, amenities);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/hello")
+    public String getString(){
+        return "There is hello right now ()()()()()()()()()";
     }
 
 

@@ -2,10 +2,7 @@ package com.hotels.test.entities;
 
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -15,31 +12,31 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Hotel {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "contacts")
     private Contacts contacts;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn
     private ArrivalTime arrivalTime;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn
     private Amenities amenities;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn
     private Address address;
 
-    @Column
     private String description;
 
-    @Column
     private String brand;
 
     @Column
@@ -48,6 +45,7 @@ public class Hotel {
 
 
     public List<String> getAminities(){
+        if (amenities == null) return new java.util.ArrayList<>();
         return amenities.getAmenities();
     }
 
